@@ -2,8 +2,8 @@
 //  CameraViewController.swift
 //  Parstagram
 //
-//  Created by Quentin-Allen Velayo Fernandez on 3/1/20.
-//  Copyright © 2020 Quentin-Allen Velayo Fernandez. All rights reserved.
+//  Created by Maryann Cortez on 3/3/20.
+//  Copyright © 2020 Maryann Cortez. All rights reserved.
 //
 
 import UIKit
@@ -11,7 +11,9 @@ import AlamofireImage
 import Parse
 
 class CameraViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
     @IBOutlet weak var imageView: UIImageView!
+    
     @IBOutlet weak var commentField: UITextField!
     
     override func viewDidLoad() {
@@ -28,7 +30,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         post["author"] = PFUser.current()!
         
         let imageData = imageView.image!.pngData()
-        let file = PFFileObject(data: imageData!)
+        let file = PFFileObject(name: "image.png", data: imageData!)
         
         post["image"] = file
         
@@ -59,7 +61,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         let image = info[.editedImage] as! UIImage
         
         let size = CGSize(width: 300, height: 300)
-        let scaledImage = image.af_imageScaled(to: size)
+        let scaledImage = image.af_imageAspectScaled(toFill: size)
         
         imageView.image = scaledImage
         
